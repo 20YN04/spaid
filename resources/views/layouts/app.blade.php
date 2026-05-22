@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="nl" class="bg-white text-neutral-900 antialiased">
+<html lang="{{ app()->getLocale() }}" class="bg-white text-neutral-900 antialiased">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,18 +13,38 @@
         .btn-primary { background: var(--ink); color: var(--paper); padding: 0.875rem 1.25rem; font-weight: 600; letter-spacing: 0.02em; }
         .btn-primary:hover { background: #262626; }
         .btn-primary:disabled { background: #a3a3a3; cursor: not-allowed; }
+        .lang-pill { padding: 0.25rem 0.55rem; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+        .lang-pill.active { background: var(--ink); color: var(--paper); }
     </style>
 </head>
 <body class="min-h-screen">
     <header class="hairline border-x-0 border-t-0">
-        <div class="mx-auto max-w-6xl px-6 py-5 flex items-center justify-between">
+        <div class="mx-auto max-w-6xl px-6 py-5 flex items-center justify-between gap-6">
             <a href="/" class="font-bold tracking-tight text-lg">spaid.</a>
-            @auth
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="text-sm underline underline-offset-4">Uitloggen</button>
-                </form>
-            @endauth
+
+            <nav class="flex items-center gap-5">
+                @php
+                    $current = app()->getLocale();
+                    $supported = config('app.supported_locales', ['nl', 'fr']);
+                @endphp
+                <div class="hairline inline-flex divide-x divide-neutral-900">
+                    @foreach ($supported as $loc)
+                        <a href="{{ route('locale.switch', ['locale' => $loc]) }}"
+                           class="lang-pill {{ $loc === $current ? 'active' : '' }}"
+                           hreflang="{{ $loc }}"
+                           aria-current="{{ $loc === $current ? 'true' : 'false' }}">
+                            {{ strtoupper($loc) }}
+                        </a>
+                    @endforeach
+                </div>
+
+                @auth
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="text-sm underline underline-offset-4">{{ __('Logout') }}</button>
+                    </form>
+                @endauth
+            </nav>
         </div>
     </header>
 
@@ -39,7 +59,7 @@
     </main>
 
     <footer class="mx-auto max-w-6xl px-6 py-10 text-xs text-neutral-500">
-        © {{ date('Y') }} Spaid — werkgeverswelzijn voor ouders van neurodivergente kinderen.
+        © {{ date('Y') }} {{ __('Spaid — employer wellness for parents of neurodivergent children.') }}
     </footer>
 </body>
 </html>

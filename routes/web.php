@@ -1,11 +1,16 @@
 <?php
 
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\TriageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn () => view('welcome'));
+
+Route::get('/locale/{locale}', [LocaleController::class, 'switch'])
+    ->where('locale', 'nl|fr')
+    ->name('locale.switch');
 
 Route::middleware(['auth', 'verified'])->group(function (): void {
     Route::get('/triage', [TriageController::class, 'show'])->name('triage.show');
