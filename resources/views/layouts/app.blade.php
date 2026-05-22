@@ -21,6 +21,13 @@
         .nav-link { font-size: 0.875rem; font-weight: 500; }
         .nav-link.active { font-weight: 700; }
         .section-eyebrow { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #525252; }
+        #cookie-banner { position: fixed; bottom: 1rem; left: 1rem; right: 1rem; z-index: 50; background: var(--ink); color: var(--paper); padding: 1.25rem; max-width: 56rem; margin: 0 auto; display: none; }
+        #cookie-banner.is-visible { display: flex; flex-direction: column; gap: 0.75rem; }
+        @media (min-width: 640px) { #cookie-banner.is-visible { flex-direction: row; align-items: center; justify-content: space-between; gap: 1.5rem; } }
+        #cookie-banner button { font-weight: 600; padding: 0.6rem 1rem; font-size: 0.85rem; }
+        #cookie-banner .accept { background: var(--paper); color: var(--ink); }
+        #cookie-banner .reject { background: transparent; color: var(--paper); border: 1px solid var(--paper); }
+        #cookie-banner a { color: var(--paper); text-decoration: underline; text-underline-offset: 0.25rem; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -81,12 +88,61 @@
     </main>
 
     <footer class="hairline border-x-0 border-b-0 mt-12">
-        <div class="mx-auto max-w-6xl px-6 py-10 text-xs text-neutral-500 flex flex-col sm:flex-row gap-3 sm:justify-between">
-            <span>© {{ date('Y') }} {{ __('Spaid — employer wellness for parents of neurodivergent children.') }}</span>
-            <span>
-                <a href="mailto:office@spaid.be" class="underline underline-offset-4">office@spaid.be</a>
-            </span>
+        <div class="mx-auto max-w-6xl px-6 py-10 text-xs text-neutral-500 grid grid-cols-1 sm:grid-cols-12 gap-6">
+            <div class="sm:col-span-5 space-y-2">
+                <p class="font-semibold text-neutral-900">Spaid BV</p>
+                <p>{{ __('Registered office: Leuven, Belgium') }}</p>
+                <p>BTW BE 0000.000.000 · KBO 0000.000.000</p>
+                <p><a href="mailto:office@spaid.be" class="underline underline-offset-4">office@spaid.be</a></p>
+            </div>
+            <div class="sm:col-span-4 space-y-2">
+                <p class="font-semibold text-neutral-900">{{ __('Legal') }}</p>
+                <ul class="space-y-1">
+                    <li><a href="{{ route('legal.privacy') }}" class="hover:underline underline-offset-4">{{ __('Privacy policy') }}</a></li>
+                    <li><a href="{{ route('legal.terms') }}" class="hover:underline underline-offset-4">{{ __('Terms & conditions') }}</a></li>
+                    <li><a href="{{ route('legal.cookies') }}" class="hover:underline underline-offset-4">{{ __('Cookie policy') }}</a></li>
+                    <li><a href="{{ route('legal.accessibility') }}" class="hover:underline underline-offset-4">{{ __('Accessibility statement') }}</a></li>
+                </ul>
+            </div>
+            <div class="sm:col-span-3 space-y-2 sm:text-right">
+                <p class="font-semibold text-neutral-900">© {{ date('Y') }} Spaid</p>
+                <p>{{ __('Employer wellness for parents of neurodivergent children.') }}</p>
+            </div>
         </div>
     </footer>
+
+    <div id="cookie-banner" role="dialog" aria-live="polite" aria-label="{{ __('Cookie consent') }}">
+        <div class="text-sm leading-relaxed sm:flex-1">
+            <p class="font-semibold mb-1">{{ __('We respect your privacy.') }}</p>
+            <p>
+                {{ __('Spaid only uses essential cookies needed to run the platform. We never set tracking or advertising cookies.') }}
+                <a href="{{ route('legal.cookies') }}">{{ __('Cookie policy') }}</a>.
+            </p>
+        </div>
+        <div class="flex gap-2">
+            <button type="button" class="reject" data-consent="reject">{{ __('Reject') }}</button>
+            <button type="button" class="accept" data-consent="accept">{{ __('Accept') }}</button>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            const COOKIE_NAME = 'cookie_consent';
+            const banner = document.getElementById('cookie-banner');
+            if (!banner) return;
+
+            const hasConsent = document.cookie.split('; ').some(c => c.startsWith(COOKIE_NAME + '='));
+            if (!hasConsent) banner.classList.add('is-visible');
+
+            banner.querySelectorAll('[data-consent]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const value = btn.dataset.consent;
+                    const oneYear = 60 * 60 * 24 * 365;
+                    document.cookie = `${COOKIE_NAME}=${value}; max-age=${oneYear}; path=/; samesite=lax`;
+                    banner.classList.remove('is-visible');
+                });
+            });
+        })();
+    </script>
 </body>
 </html>

@@ -13,6 +13,11 @@ Route::get('/programmas', [HomeController::class, 'programmas'])->name('programm
 Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
 Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
 
+Route::view('/privacy', 'legal.privacy')->name('legal.privacy');
+Route::view('/voorwaarden', 'legal.terms')->name('legal.terms');
+Route::view('/cookies', 'legal.cookies')->name('legal.cookies');
+Route::view('/toegankelijkheid', 'legal.accessibility')->name('legal.accessibility');
+
 Route::get('/locale/{locale}', [LocaleController::class, 'switch'])
     ->where('locale', 'nl|fr')
     ->name('locale.switch');
