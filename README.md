@@ -13,7 +13,7 @@ B2B employee-wellness platform that matches working parents of neurodivergent ch
 
 ## Local setup
 
-Requires PHP 8.4+, Composer 2, Node 20+.
+Requires PHP 8.4+, Composer 2. No Node / npm step — the frontend uses Tailwind CDN + Alpine CDN + inline JS, so there is no asset build pipeline to run.
 
 ```bash
 git clone https://github.com/20YN04/spaid.git
@@ -30,14 +30,11 @@ php artisan key:generate
 touch database/database.sqlite
 php artisan migrate --seed
 
-# JS deps + Vite (Tailwind CDN means assets aren't strictly required; install for Filament + Fortify scripts)
-npm install
-npm run dev          # leave running in a second terminal for HMR
-                     # or `npm run build` for a one-shot production bundle
-
 # Serve
 php artisan serve
 ```
+
+(Shortcut: `composer setup` runs the four artisan steps above in one go.)
 
 App boots at <http://127.0.0.1:8000>. Admin panel at <http://127.0.0.1:8000/admin>.
 
@@ -130,7 +127,7 @@ Filament admin (`/admin/*`): Clients, Users, Psychologists, Availabilities, Tria
 
 ## Tech stack notes
 
-- **Tailwind via CDN** with inline `tailwind.config` (sage / tallow / clay / alabaster palette). No Vite Tailwind build required.
+- **No build step.** Tailwind ships from the CDN (`cdn.tailwindcss.com`) with the brand palette (sage / tallow / clay / alabaster) staged in an inline `tailwind.config` block. Alpine and the magnetic cursor are CDN + inline JS. Vite was stripped because nothing in the layout consumes a built bundle — when you want production-grade asset purging, port the inline config to `resources/css/app.css` and re-add `@vite()` to the layout.
 - **Bunny Fonts** (GDPR-clean Google Fonts mirror) ships Source Serif 4 + Bricolage Grotesque.
 - **Magnetic cursor** + scroll reveals are vanilla JS in `layouts/app.blade.php`; respect `prefers-reduced-motion`.
 - **Mail driver** is `log` by default — verification emails dump to `storage/logs/laravel.log`. Wire SMTP via `MAIL_MAILER=smtp` + provider creds before production.
