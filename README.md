@@ -1,58 +1,150 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Spaid
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+B2B employee-wellness platform that matches working parents of neurodivergent children (ADHD, autism, anxiety/stress, dyslexia, dyscalculia, ages 5–18) to specialized Belgian psychologists. Activated by the employer, used privately by the parent.
 
-## About Laravel
+- **Frontend**: Laravel 13 + Blade + Tailwind CDN + Alpine.js + Bunny Fonts (Source Serif 4 + Bricolage Grotesque)
+- **Admin**: Filament v4 at `/admin`
+- **Auth**: Laravel Fortify (registration, login, password reset, email verification, 2FA, passkeys)
+- **i18n**: NL (default) + FR, session-backed switcher, JSON catalogues in `lang/`
+- **DB**: SQLite by default; swap via `DB_CONNECTION` in `.env`
+- **Brand context**: see [`PRODUCT.md`](PRODUCT.md) and [`DESIGN.md`](DESIGN.md)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Local setup
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+Requires PHP 8.4+, Composer 2, Node 20+.
 
 ```bash
-composer require laravel/boost --dev
+git clone https://github.com/20YN04/spaid.git
+cd spaid
 
-php artisan boost:install
+# PHP deps
+composer install
+
+# Env
+cp .env.example .env
+php artisan key:generate
+
+# DB: SQLite file + migrate + seed
+touch database/database.sqlite
+php artisan migrate --seed
+
+# JS deps + Vite (Tailwind CDN means assets aren't strictly required; install for Filament + Fortify scripts)
+npm install
+npm run dev          # leave running in a second terminal for HMR
+                     # or `npm run build` for a one-shot production bundle
+
+# Serve
+php artisan serve
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+App boots at <http://127.0.0.1:8000>. Admin panel at <http://127.0.0.1:8000/admin>.
 
-## Contributing
+### Optional, but recommended
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+# Process queued mail (verification + 2FA notifications go through the queue)
+php artisan queue:work
 
-## Code of Conduct
+# Tail outgoing mail (MAIL_MAILER=log writes to laravel.log)
+tail -f storage/logs/laravel.log
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## Seeded credentials
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+`php artisan db:seed` (run automatically by `migrate --seed`) provisions:
 
-## License
+### Admin account
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+| Field    | Value                  |
+|----------|------------------------|
+| Email    | `admin@ynarchive.com`  |
+| Password | `password`             |
+| Triage   | already completed      |
+| Email    | already verified       |
+
+Sign in at <http://127.0.0.1:8000/login>, then visit `/admin`. Filament gate (`User::canAccessPanel`) allows any `@ynarchive.com` user.
+
+**Override before seeding** by setting these in `.env`:
+
+```env
+ADMIN_SEED_EMAIL=you@yourdomain.tld
+ADMIN_SEED_PASSWORD=your-strong-password
+```
+
+Then re-seed:
+
+```bash
+php artisan db:seed --class=AdminUserSeeder
+```
+
+### Whitelisted corporate domains
+
+Registration is gated. Only these email domains are accepted out of the box:
+
+- `@dkv.be`            (DKV Belgium)
+- `@elias.be`          (Elias Group)
+- `@min.fed.be`        (Federal Government BE)
+- `@spaid.be`          (Spaid internal)
+- `@ynarchive.com`     (Ynarchive Studio)
+
+Add more via the admin panel: **Clients → Create**, set the `allowed_domain` to e.g. `@yourcompany.be`.
+
+### Psychologists + slots
+
+`PsychologistSeeder` provisions five clinicians with overlapping specialty coverage across all five `IssueType` values. `AvailabilitySeeder` fills the next 14 weekdays with six 1-hour slots per psychologist (9–12, 14–17) — 300 bookable slots on a fresh seed.
+
+### Reset
+
+Nuke + reseed:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+---
+
+## Routes (33)
+
+Public:
+- `GET  /`                          home
+- `GET  /programmas`                program overview
+- `GET  /contact` / `POST /contact` contact form
+- `GET  /privacy` / `/voorwaarden` / `/cookies` / `/toegankelijkheid`
+- `GET  /locale/{nl|fr}`            locale switcher
+- Fortify: `/login` `/register` `/forgot-password` `/reset-password` `/email/verify` `/user/two-factor-authentication` `/two-factor-challenge`
+
+Auth-gated:
+- `GET  /triage` / `POST /triage`
+- `GET  /dashboard`
+- `GET  /programmas/{adhd|autisme|angst|dyslexie|dyscalculie}`
+- `POST /appointments` (max 2 active per user, enforced via `AppointmentPolicy` + `StoreAppointmentRequest`)
+- `DELETE /appointments/{id}`
+
+Filament admin (`/admin/*`): Clients, Users, Psychologists, Availabilities, TriageResults, Appointments.
+
+---
+
+## Tech stack notes
+
+- **Tailwind via CDN** with inline `tailwind.config` (sage / tallow / clay / alabaster palette). No Vite Tailwind build required.
+- **Bunny Fonts** (GDPR-clean Google Fonts mirror) ships Source Serif 4 + Bricolage Grotesque.
+- **Magnetic cursor** + scroll reveals are vanilla JS in `layouts/app.blade.php`; respect `prefers-reduced-motion`.
+- **Mail driver** is `log` by default — verification emails dump to `storage/logs/laravel.log`. Wire SMTP via `MAIL_MAILER=smtp` + provider creds before production.
+- **Queue driver** is `database`. Run `php artisan queue:work` to process queued jobs (e.g. Fortify notifications).
+- **Booking guardrail** is enforced at three layers: `AppointmentPolicy@create`, `StoreAppointmentRequest@passedValidation`, and a `lockForUpdate` transaction in `AppointmentController@store`.
+
+---
+
+## Production checklist (not yet done)
+
+- [ ] Replace `BTW BE 0000.000.000` / `KBO 0000.000.000` placeholders in `layouts/app.blade.php` footer.
+- [ ] Custom-brand the Fortify verification email (currently default Laravel template).
+- [ ] Swap `MAIL_MAILER=log` → SMTP provider.
+- [ ] Run `php artisan queue:work` (or supervisor / systemd).
+- [ ] Swap SQLite → Postgres / MySQL for production.
+- [ ] Belgian lawyer review on `/privacy` `/voorwaarden` `/cookies` `/toegankelijkheid` copy.
+- [ ] Tighten `User::canAccessPanel` (currently allows any `@ynarchive.com`); add an `is_admin` column or Spatie roles.
