@@ -29,17 +29,17 @@
         </header>
 
         @if ($atLimit)
-            <aside class="relative rounded-3xl overflow-hidden bg-ink text-alabaster p-8 md:p-12 shadow-sanctuary" data-reveal>
-                <div class="blob bg-tallow-700 w-72 h-72 -top-10 -right-10 opacity-40"></div>
+            <aside class="relative rounded-3xl overflow-hidden bg-gradient-to-br from-sage-700 to-ink text-alabaster p-8 md:p-12 shadow-sanctuary" data-reveal>
+                <div class="blob bg-tallow-500 w-72 h-72 -top-10 -right-10 opacity-40"></div>
                 <div class="relative grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
                     <div class="md:col-span-1">
                         <span class="block w-12 h-12 rounded-full border border-tallow-300/60 flex items-center justify-center">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v6M12 16v6M2 12h6M16 12h6"/></svg>
                         </span>
                     </div>
                     <div class="md:col-span-11 space-y-2">
-                        <p class="font-serif text-3xl">{{ __('Computer says no.') }}</p>
-                        <p class="text-alabaster/80 max-w-xl">{{ __('You have reached the maximum of 2 active bookings. Cancel or complete an existing session to book again.') }}</p>
+                        <p class="font-serif text-3xl">{{ __('Take a breath — you already have two.') }}</p>
+                        <p class="text-alabaster/85 max-w-xl">{{ __('Two active sessions is our gentle ceiling. It keeps the calendar honest and your week sane. Finish or release a slot and the next one opens right up.') }}</p>
                         <a href="{{ route('dashboard') }}" class="link-underline text-tallow-300 text-sm pt-2 inline-flex">{{ __('Manage existing bookings') }} →</a>
                     </div>
                 </div>
