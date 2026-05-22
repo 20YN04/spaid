@@ -4,10 +4,11 @@
 @section('description', __('Spaid is a B2B wellness platform for parents of neurodivergent children, embedded in the employee benefits stack.'))
 
 @section('full-bleed')
-    <section class="relative overflow-hidden">
-        <div class="blob bg-tallow-300 w-[42rem] h-[42rem] -top-40 -right-40 animate-ambient"></div>
-        <div class="blob bg-sage-200 w-[36rem] h-[36rem] -bottom-60 -left-40 animate-ambient" style="animation-delay:-7s"></div>
-        <div class="absolute inset-0 bg-noise opacity-[0.35] mix-blend-multiply pointer-events-none"></div>
+    <section class="relative overflow-hidden bg-gradient-to-br from-tallow-100 via-alabaster to-sage-100">
+        <div class="blob bg-tallow-500 w-[42rem] h-[42rem] -top-40 -right-40 animate-ambient" style="opacity:.75"></div>
+        <div class="blob bg-sage-400 w-[36rem] h-[36rem] -bottom-60 -left-40 animate-ambient" style="animation-delay:-7s;opacity:.6"></div>
+        <div class="blob bg-clay-500 w-[28rem] h-[28rem] top-1/3 right-1/4 animate-ambient" style="animation-delay:-3s;opacity:.35"></div>
+        <div class="absolute inset-0 bg-noise opacity-[0.4] mix-blend-multiply pointer-events-none"></div>
 
         <div class="relative mx-auto max-w-7xl px-6 lg:px-10 pt-20 pb-32">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
@@ -44,34 +45,40 @@
         </div>
     </section>
 
-    <section class="border-y border-ink/10 bg-whisper/60">
+    <section class="border-y border-sage-700/25 bg-sage-700 text-alabaster">
         <div class="mx-auto max-w-7xl px-6 lg:px-10 py-10 flex flex-wrap items-center justify-between gap-6">
-            <p class="eyebrow">{{ __('Five clinical pathways') }}</p>
-            <div class="flex flex-wrap items-center gap-x-10 gap-y-3 font-serif text-2xl text-ink/70">
-                @foreach ($issueTypes as $issue)<span>{{ $issue->label() }}</span>@endforeach
+            <p class="eyebrow text-tallow-300">{{ __('Five clinical pathways') }}</p>
+            <div class="flex flex-wrap items-center gap-x-10 gap-y-3 font-serif text-2xl text-alabaster/95">
+                @foreach ($issueTypes as $issue)
+                    <span class="flex items-center gap-3">
+                        <span class="block w-1.5 h-1.5 rounded-full bg-tallow-500"></span>
+                        {{ $issue->label() }}
+                    </span>
+                @endforeach
             </div>
         </div>
     </section>
 
-    <section class="relative">
+    <section class="relative bg-tallow-100/60">
         <div class="mx-auto max-w-7xl px-6 lg:px-10 py-32">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
                 <div class="lg:col-span-4 space-y-5" data-reveal>
                     <p class="eyebrow">{{ __('Why through the employer?') }}</p>
-                    <h2 class="font-serif text-h1 leading-tight">{{ __('A modern HR lever for') }} <em class="text-sage-700">{{ __('talent, retention, prevention') }}</em>.</h2>
-                    <p class="text-ink/70 leading-relaxed max-w-md">{{ __('Spaid lives quietly inside the benefits stack. Employees activate it the moment they need it — no extra contracts, no out-of-pocket cost, no stigma.') }}</p>
+                    <h2 class="font-serif text-h1 leading-tight text-ink">{{ __('A modern HR lever for') }} <em class="text-sage-700">{{ __('talent, retention, prevention') }}</em>.</h2>
+                    <p class="text-ink/75 leading-relaxed max-w-md">{{ __('Spaid lives quietly inside the benefits stack. Employees activate it the moment they need it — no extra contracts, no out-of-pocket cost, no stigma.') }}</p>
                 </div>
                 <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-5">
                     @foreach ([
                         ['01', __('Modern HR policy'), __('Slots into talent attraction + retention strategies.'), 'sage'],
                         ['02', __('Support in tough life phases'), __('Optimal employer-led help when families need it most.'), 'tallow'],
-                        ['03', __('Prevent absenteeism'), __('Proactive prevention drops turnover and sick days.'), 'sage'],
+                        ['03', __('Prevent absenteeism'), __('Proactive prevention drops turnover and sick days.'), 'clay'],
                     ] as [$num, $title, $body, $accent])
                         <div class="card relative overflow-hidden" data-reveal style="transition-delay:{{ $loop->index * 0.1 }}s">
-                            <span class="absolute top-0 right-0 w-24 h-24 rounded-full -mr-10 -mt-10 blur-2xl {{ $accent === 'tallow' ? 'bg-tallow-300/50' : 'bg-sage-200/60' }}"></span>
+                            <span class="absolute top-0 right-0 w-32 h-32 rounded-full -mr-12 -mt-12 blur-2xl opacity-80
+                                {{ $accent === 'tallow' ? 'bg-tallow-500' : ($accent === 'clay' ? 'bg-clay-500' : 'bg-sage-400') }}"></span>
                             <p class="eyebrow">{{ $num }}</p>
-                            <p class="font-serif text-xl mt-3">{{ $title }}</p>
-                            <p class="text-sm text-ink/70 mt-2 leading-relaxed">{{ $body }}</p>
+                            <p class="font-serif text-xl mt-3 text-ink">{{ $title }}</p>
+                            <p class="text-sm text-ink/75 mt-2 leading-relaxed">{{ $body }}</p>
                         </div>
                     @endforeach
                 </div>
@@ -128,11 +135,11 @@
         </div>
     </section>
 
-    <section class="bg-whisper/50 border-y border-ink/10">
+    <section class="bg-sage-100 border-y border-sage-700/25">
         <div class="mx-auto max-w-7xl px-6 lg:px-10 py-24 grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
             <div class="md:col-span-7 space-y-4" data-reveal>
                 <p class="eyebrow">{{ __('Scientific partnership') }}</p>
-                <h2 class="font-serif text-h2 leading-tight">{{ __('Developed with KU Leuven faculty of') }} <em class="text-sage-700">{{ __('Psychology & Educational Sciences.') }}</em></h2>
+                <h2 class="font-serif text-h2 leading-tight text-ink">{{ __('Developed with KU Leuven faculty of') }} <em class="text-sage-700">{{ __('Psychology & Educational Sciences.') }}</em></h2>
                 <p class="text-ink/70 leading-relaxed max-w-xl">{{ __('In collaboration with Prof. Dr. Dieter Baeyens and Prof. Dr. Karla Van Leeuwen.') }}</p>
             </div>
             <div class="md:col-span-5" data-reveal style="transition-delay:.1s">

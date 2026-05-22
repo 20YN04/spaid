@@ -11,15 +11,17 @@
     <link rel="stylesheet"
           href="https://fonts.bunny.net/css?family=fraunces:400,500,600,700|space-grotesk:300,400,500,600,700&display=swap">
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    {{-- IMPORTANT: tailwind.config MUST execute before the CDN script processes the DOM --}}
     <script>
-        tailwind.config = {
+        window.tailwind = window.tailwind || {};
+        window.tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        alabaster:'#F5F2EC', whisper:'#ECE6D9', ink:'#1B2420', slate:'#3F4A52',
-                        sage: { 50:'#EFF2EE',100:'#DDE4DC',200:'#C9D3CB',300:'#A9BAAC',400:'#8FA694',500:'#6E886F',600:'#536E54',700:'#3F5742',800:'#2F4232',900:'#1F2D22' },
-                        tallow:{ 100:'#F3EAD5',300:'#E6D2A5',500:'#D6BE9B',700:'#B89868',900:'#8B6E40' },
+                        alabaster:'#F1ECDF', whisper:'#E5DDC8', ink:'#162320', slate:'#3F4A52',
+                        sage: { 50:'#E7EEE7',100:'#D2DED2',200:'#B4C7B7',300:'#92AE96',400:'#789578',500:'#5E7B5F',600:'#476048',700:'#374B38',800:'#283827',900:'#1A2419' },
+                        tallow:{ 100:'#F0E2C0',300:'#E0C68C',500:'#CFAB66',700:'#B0884A',900:'#7C5E2F' },
+                        clay:   { 300:'#E1B79C', 500:'#C99876', 700:'#A47855' },
                     },
                     fontFamily: { serif:['Fraunces','ui-serif','Georgia','serif'], sans:['Space Grotesk','ui-sans-serif','system-ui'] },
                     fontSize: {
@@ -42,17 +44,18 @@
             },
         };
     </script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        :root{--alabaster:#F5F2EC;--whisper:#ECE6D9;--ink:#1B2420;--sage-600:#536E54;--sage-800:#2F4232;--tallow:#D6BE9B;}
+        :root{--alabaster:#F1ECDF;--whisper:#E5DDC8;--ink:#162320;--sage-300:#92AE96;--sage-500:#5E7B5F;--sage-600:#476048;--sage-700:#374B38;--sage-800:#283827;--tallow-300:#E0C68C;--tallow-500:#CFAB66;--tallow-700:#B0884A;--clay-500:#C99876;}
         *{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
-        body{font-family:'Space Grotesk',ui-sans-serif,system-ui;background:var(--alabaster);color:var(--ink);}
+        body{font-family:'Space Grotesk',ui-sans-serif,system-ui;background:var(--alabaster);color:var(--ink);background-image:radial-gradient(120% 60% at 80% 0%, rgba(207,171,102,0.18) 0%, transparent 55%),radial-gradient(80% 60% at 0% 100%, rgba(94,123,95,0.20) 0%, transparent 60%);background-attachment:fixed;}
         .font-serif{font-family:'Fraunces',ui-serif,serif;font-optical-sizing:auto;}
         ::selection{background:var(--ink);color:var(--alabaster);}
         [data-reveal]{opacity:0;transform:translateY(28px);transition:opacity 1.1s cubic-bezier(0.22,1,0.36,1),transform 1.1s cubic-bezier(0.22,1,0.36,1);will-change:opacity,transform;}
         [data-reveal].is-in-view{opacity:1;transform:translateY(0);}
         @media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1;transform:none;transition:none;}}
-        .eyebrow{font-size:0.72rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--sage-600);}
+        .eyebrow{font-size:0.72rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--sage-700);}
         .btn{position:relative;display:inline-flex;align-items:center;gap:0.65rem;padding:0.95rem 1.4rem;font-weight:600;font-size:0.92rem;border-radius:999px;transition:transform .35s cubic-bezier(0.22,1,0.36,1),background .35s,color .35s,box-shadow .35s;will-change:transform;}
         .btn:hover{transform:translateY(-2px);}.btn:active{transform:translateY(0);}
         .btn-primary{background:var(--ink);color:var(--alabaster);box-shadow:0 16px 36px -18px rgba(27,36,32,0.55);}
@@ -65,8 +68,8 @@
         .field:focus{outline:none;border-color:var(--ink);background:rgba(27,36,32,0.04);}
         .field-label{display:block;margin-bottom:0.25rem;}
         .field-label > span{display:block;font-size:0.72rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--sage-600);}
-        .card{background:#FBF9F4;border:1px solid rgba(27,36,32,0.08);border-radius:1.25rem;padding:1.75rem;transition:transform .5s cubic-bezier(0.22,1,0.36,1),box-shadow .5s,border-color .5s;}
-        .card:hover{transform:translateY(-4px);box-shadow:0 30px 60px -30px rgba(27,36,32,0.25);border-color:rgba(143,166,148,0.4);}
+        .card{background:#FAF4E4;border:1px solid rgba(71,96,72,0.18);border-radius:1.25rem;padding:1.75rem;transition:transform .5s cubic-bezier(0.22,1,0.36,1),box-shadow .5s,border-color .5s,background .5s;}
+        .card:hover{transform:translateY(-4px);box-shadow:0 30px 60px -30px rgba(22,35,32,0.25);border-color:var(--sage-500);background:#F7EFD9;}
         .link-underline{position:relative;display:inline-flex;align-items:center;gap:0.4rem;font-weight:500;}
         .link-underline::after{content:"";position:absolute;bottom:-2px;left:0;width:100%;height:1px;background:currentColor;transform-origin:left;transform:scaleX(1);transition:transform .6s cubic-bezier(0.22,1,0.36,1);}
         .link-underline:hover::after{transform-origin:right;transform:scaleX(0);}
@@ -82,7 +85,7 @@
             .cursor-active .cursor-dot{width:0;height:0;}
             .cursor-active .cursor-ring{width:64px;height:64px;background:rgba(27,36,32,0.06);border-color:var(--ink);}
         }
-        .blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:0.55;pointer-events:none;}
+        .blob{position:absolute;border-radius:50%;filter:blur(48px);opacity:0.9;pointer-events:none;mix-blend-mode:multiply;}
         #cookie-banner{position:fixed;bottom:1.25rem;left:1.25rem;right:1.25rem;z-index:60;background:rgba(27,36,32,0.96);color:var(--alabaster);padding:1.3rem 1.5rem;max-width:56rem;margin:0 auto;border-radius:1.25rem;backdrop-filter:blur(8px);display:none;box-shadow:0 30px 80px -20px rgba(27,36,32,0.45);}
         #cookie-banner.is-visible{display:flex;flex-direction:column;gap:0.85rem;}
         @media (min-width:640px){#cookie-banner.is-visible{flex-direction:row;align-items:center;justify-content:space-between;gap:1.5rem;}}
@@ -99,10 +102,10 @@
     <div class="cursor-dot" aria-hidden="true"></div>
     <div class="cursor-ring" aria-hidden="true"></div>
 
-    <header class="sticky top-0 z-40 backdrop-blur-md bg-alabaster/80 border-b border-ink/5">
+    <header class="sticky top-0 z-40 backdrop-blur-md bg-alabaster/85 border-b border-sage-700/15">
         <div class="mx-auto max-w-7xl px-6 lg:px-10 py-5 flex items-center justify-between gap-6">
             <a href="{{ route('home') }}" class="flex items-baseline gap-1 group">
-                <span class="font-serif text-2xl font-medium tracking-tight">spaid</span>
+                <span class="font-serif text-2xl font-medium tracking-tight text-ink">spaid</span>
                 <span class="w-1.5 h-1.5 rounded-full bg-tallow-500 mt-0.5 group-hover:bg-sage-500 transition-colors"></span>
             </a>
 
