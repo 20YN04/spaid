@@ -3,41 +3,33 @@
 @section('title', __('Reset password'))
 
 @section('content')
-    <div class="max-w-md mx-auto">
-        <h1 class="text-3xl font-bold tracking-tight mb-8">{{ __('Reset password') }}</h1>
+    <div class="max-w-xl mx-auto" data-reveal>
+        <p class="eyebrow">{{ __('Reset password') }}</p>
+        <h1 class="font-serif text-h1 leading-tight mt-3">{{ __('Choose a new password.') }}</h1>
 
-        @if ($errors->any())
-            <div class="hairline border-red-600 text-red-700 px-4 py-3 text-sm mb-6">
-                @foreach ($errors->all() as $error)<div>{{ $error }}</div>@endforeach
-            </div>
-        @endif
+        <div class="rounded-3xl bg-alabaster border border-ink/10 shadow-sanctuary p-10 md:p-12 mt-8">
+            @if ($errors->any())
+                <div class="rounded-xl bg-tallow-100 border border-tallow-500/60 px-5 py-3 text-sm mb-6">
+                    @foreach ($errors->all() as $error)<div>{{ $error }}</div>@endforeach
+                </div>
+            @endif
 
-        <form method="POST" action="{{ route('password.update') }}" class="space-y-5">
-            @csrf
-            <input type="hidden" name="token" value="{{ $request->route('token') }}">
-
-            <label class="block">
-                <span class="text-xs uppercase tracking-widest text-neutral-500">{{ __('Email') }}</span>
-                <input type="email" name="email" required autofocus autocomplete="email"
-                       value="{{ old('email', $request->email) }}"
-                       class="mt-1 w-full hairline px-3 py-2 bg-white">
-            </label>
-
-            <label class="block">
-                <span class="text-xs uppercase tracking-widest text-neutral-500">{{ __('New password') }}</span>
-                <input type="password" name="password" required autocomplete="new-password"
-                       class="mt-1 w-full hairline px-3 py-2 bg-white">
-            </label>
-
-            <label class="block">
-                <span class="text-xs uppercase tracking-widest text-neutral-500">{{ __('Confirm password') }}</span>
-                <input type="password" name="password_confirmation" required autocomplete="new-password"
-                       class="mt-1 w-full hairline px-3 py-2 bg-white">
-            </label>
-
-            <div class="flex justify-end pt-2">
-                <button type="submit" class="btn-primary">{{ __('Reset password') }} →</button>
-            </div>
-        </form>
+            <form method="POST" action="{{ route('password.update') }}" class="space-y-7">
+                @csrf
+                <input type="hidden" name="token" value="{{ $request->route('token') }}">
+                <label class="field-label"><span>{{ __('Email') }}</span>
+                    <input type="email" name="email" required autofocus autocomplete="email" value="{{ old('email', $request->email) }}" class="field">
+                </label>
+                <label class="field-label"><span>{{ __('New password') }}</span>
+                    <input type="password" name="password" required autocomplete="new-password" class="field">
+                </label>
+                <label class="field-label"><span>{{ __('Confirm password') }}</span>
+                    <input type="password" name="password_confirmation" required autocomplete="new-password" class="field">
+                </label>
+                <div class="flex justify-end pt-2">
+                    <button type="submit" class="btn btn-primary" data-magnetic>{{ __('Reset password') }}</button>
+                </div>
+            </form>
+        </div>
     </div>
 @endsection
