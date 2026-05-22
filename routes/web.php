@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\TriageController;
 use Illuminate\Support\Facades\Route;
@@ -15,5 +16,8 @@ Route::middleware(['auth', 'verified'])->group(function (): void {
         Route::get('/programmas/{programSlug}', [ProgramController::class, 'show'])
             ->where('programSlug', 'adhd|autisme|angst|dyslexie|dyscalculie')
             ->name('programs.show');
+
+        Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');
+        Route::delete('/appointments/{appointment}', [AppointmentController::class, 'destroy'])->name('appointments.destroy');
     });
 });
