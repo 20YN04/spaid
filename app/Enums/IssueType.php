@@ -10,14 +10,22 @@ enum IssueType: string
     case Dyslexie = 'dyslexie';
     case Dyscalculie = 'dyscalculie';
 
+    /**
+     * Locale-aware label, resolved via lang/{locale}.json.
+     */
     public function label(): string
+    {
+        return __($this->translationKey());
+    }
+
+    public function translationKey(): string
     {
         return match ($this) {
             self::Adhd => 'ADHD',
-            self::Autisme => 'Autisme',
-            self::AngstStress => 'Angst/Stress',
-            self::Dyslexie => 'Dyslexie',
-            self::Dyscalculie => 'Dyscalculie',
+            self::Autisme => 'Autism',
+            self::AngstStress => 'Anxiety/Stress',
+            self::Dyslexie => 'Dyslexia',
+            self::Dyscalculie => 'Dyscalculia',
         };
     }
 
