@@ -26,7 +26,9 @@ class StoreAppointmentRequest extends FormRequest
         return [
             'availability_id' => [
                 'required',
-                Rule::exists('availabilities', 'id')->where('is_booked', false),
+                Rule::exists('availabilities', 'id')->where(function ($q) {
+                    $q->where('is_booked', 0)->where('start_time', '>', now());
+                }),
                 $this->matchesUserSpecialty(),
             ],
         ];
