@@ -4,84 +4,74 @@
 @section('description', __('Spaid is a B2B wellness platform for parents of neurodivergent children, embedded in the employee benefits stack.'))
 
 @section('full-bleed')
-    {{-- HERO --}}
-    <section class="hairline border-x-0 border-t-0 bg-neutral-50">
-        <div class="mx-auto max-w-6xl px-6 py-24 grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
-            <div class="md:col-span-7 space-y-6">
-                <p class="section-eyebrow">{{ __('B2B employee wellness') }}</p>
-                <h1 class="text-5xl md:text-6xl font-bold tracking-tight leading-[1.05]">
-                    {{ __('Mentally stronger,') }}<br>
-                    {{ __('professionally more powerful.') }}
-                </h1>
-                <p class="text-lg text-neutral-700 leading-relaxed max-w-xl">
-                    {{ __('Spaid connects employees who have children with a neurodivergent diagnosis to specialized psychologists, so they can stay focused at work and present at home.') }}
-                </p>
-                <div class="flex flex-wrap items-center gap-3 pt-2">
-                    <a href="{{ route('contact.show') }}" class="btn-primary">{{ __('Talk to us about your team') }} →</a>
-                    <a href="{{ route('programmas.index') }}" class="btn-ghost">{{ __('Explore the program') }}</a>
+    <section class="relative overflow-hidden">
+        <div class="blob bg-tallow-300 w-[42rem] h-[42rem] -top-40 -right-40 animate-ambient"></div>
+        <div class="blob bg-sage-200 w-[36rem] h-[36rem] -bottom-60 -left-40 animate-ambient" style="animation-delay:-7s"></div>
+        <div class="absolute inset-0 bg-noise opacity-[0.35] mix-blend-multiply pointer-events-none"></div>
+
+        <div class="relative mx-auto max-w-7xl px-6 lg:px-10 pt-20 pb-32">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
+                <div class="lg:col-span-8 space-y-8" data-reveal>
+                    <p class="eyebrow">{{ __('B2B employee wellness · KU Leuven backed') }}</p>
+                    <h1 class="font-serif text-hero font-medium text-ink">
+                        {{ __('Mentally stronger,') }}<br>
+                        <span class="italic text-sage-700">{{ __('professionally') }}</span>
+                        {{ __('more powerful.') }}
+                    </h1>
+                    <p class="text-lg md:text-xl text-ink/75 leading-relaxed max-w-2xl">{{ __('Spaid is a sanctuary for working parents of neurodivergent children — matching them to specialized psychologists, quietly, inside the benefits stack their employer already runs.') }}</p>
+                    <div class="flex flex-wrap items-center gap-4 pt-4">
+                        <a href="{{ route('contact.show') }}" class="btn btn-primary" data-magnetic>
+                            {{ __('Talk to us about your team') }}
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                        </a>
+                        <a href="{{ route('programmas.index') }}" class="btn btn-ghost">{{ __('Explore the program') }}</a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-4 space-y-6" data-reveal style="transition-delay:.15s">
+                    <div class="card bg-ink text-alabaster border-ink/0 shadow-sanctuary">
+                        <p class="eyebrow text-tallow-300">{{ __('Did you know') }}</p>
+                        <p class="font-serif text-3xl mt-3 leading-snug">{{ __('10–20% of school-age children carry a learning or neurodevelopmental diagnosis.') }}</p>
+                        <p class="text-xs text-alabaster/60 mt-4">{{ __('Source: KU Leuven Psychology & Educational Sciences') }}</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="md:col-span-5">
-                <div class="hairline aspect-[4/5] flex items-end p-6 bg-white">
-                    <div>
-                        <p class="section-eyebrow mb-2">{{ __('Did you know') }}</p>
-                        <p class="text-2xl font-semibold tracking-tight leading-snug">
-                            {{ __('10–20% of school-age children deal with a learning or neurodevelopmental disorder.') }}
-                        </p>
-                        <p class="text-xs text-neutral-500 mt-3">
-                            {{ __('Source: KU Leuven Psychology & Educational Sciences') }}
-                        </p>
-                    </div>
-                </div>
+            <div class="mt-20 flex items-center gap-3 text-xs text-ink/55">
+                <span class="block w-12 h-px bg-ink/40"></span>
+                <span class="eyebrow">{{ __('Scroll') }}</span>
             </div>
         </div>
     </section>
 
-    {{-- WAAROM VIA WERKGEVER --}}
-    <section class="mx-auto max-w-6xl px-6 py-20">
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
-            <div class="md:col-span-4">
-                <p class="section-eyebrow mb-3">{{ __('Why through the employer?') }}</p>
-                <h2 class="text-3xl font-bold tracking-tight leading-tight">
-                    {{ __('A modern HR lever for talent, retention and prevention.') }}
-                </h2>
-            </div>
-            <div class="md:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-6">
-                @foreach ([
-                    ['01', __('Modern HR policy'), __('Fits talent attraction and retention strategies.')],
-                    ['02', __('Support in tough life phases'), __('Optimal employer-led help when families need it.')],
-                    ['03', __('Prevent absenteeism'), __('Proactive prevention reduces turnover and sick days.')],
-                ] as [$num, $title, $body])
-                    <div class="hairline p-5">
-                        <p class="section-eyebrow">{{ $num }}</p>
-                        <p class="font-semibold mt-2">{{ $title }}</p>
-                        <p class="text-sm text-neutral-700 mt-2 leading-relaxed">{{ $body }}</p>
-                    </div>
-                @endforeach
+    <section class="border-y border-ink/10 bg-whisper/60">
+        <div class="mx-auto max-w-7xl px-6 lg:px-10 py-10 flex flex-wrap items-center justify-between gap-6">
+            <p class="eyebrow">{{ __('Five clinical pathways') }}</p>
+            <div class="flex flex-wrap items-center gap-x-10 gap-y-3 font-serif text-2xl text-ink/70">
+                @foreach ($issueTypes as $issue)<span>{{ $issue->label() }}</span>@endforeach
             </div>
         </div>
     </section>
 
-    {{-- VOOR WIE --}}
-    <section class="bg-neutral-900 text-white">
-        <div class="mx-auto max-w-6xl px-6 py-20">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
-                <div class="md:col-span-5">
-                    <p class="section-eyebrow text-neutral-400 mb-3">{{ __('Who is Spaid for?') }}</p>
-                    <h2 class="text-3xl font-bold tracking-tight leading-tight">
-                        {{ __('Employees with children aged 5–18 carrying a clinical diagnosis.') }}
-                    </h2>
-                    <p class="text-neutral-300 mt-4 leading-relaxed">
-                        {{ __('One program, five clinical pathways — each routed to a psychologist who actually specializes in that diagnosis.') }}
-                    </p>
+    <section class="relative">
+        <div class="mx-auto max-w-7xl px-6 lg:px-10 py-32">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <div class="lg:col-span-4 space-y-5" data-reveal>
+                    <p class="eyebrow">{{ __('Why through the employer?') }}</p>
+                    <h2 class="font-serif text-h1 leading-tight">{{ __('A modern HR lever for') }} <em class="text-sage-700">{{ __('talent, retention, prevention') }}</em>.</h2>
+                    <p class="text-ink/70 leading-relaxed max-w-md">{{ __('Spaid lives quietly inside the benefits stack. Employees activate it the moment they need it — no extra contracts, no out-of-pocket cost, no stigma.') }}</p>
                 </div>
-
-                <div class="md:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    @foreach ($issueTypes as $issue)
-                        <div class="border border-neutral-700 p-4">
-                            <p class="font-semibold">{{ $issue->label() }}</p>
-                            <p class="text-xs text-neutral-400 mt-1">{{ strtoupper($issue->value) }}</p>
+                <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-5">
+                    @foreach ([
+                        ['01', __('Modern HR policy'), __('Slots into talent attraction + retention strategies.'), 'sage'],
+                        ['02', __('Support in tough life phases'), __('Optimal employer-led help when families need it most.'), 'tallow'],
+                        ['03', __('Prevent absenteeism'), __('Proactive prevention drops turnover and sick days.'), 'sage'],
+                    ] as [$num, $title, $body, $accent])
+                        <div class="card relative overflow-hidden" data-reveal style="transition-delay:{{ $loop->index * 0.1 }}s">
+                            <span class="absolute top-0 right-0 w-24 h-24 rounded-full -mr-10 -mt-10 blur-2xl {{ $accent === 'tallow' ? 'bg-tallow-300/50' : 'bg-sage-200/60' }}"></span>
+                            <p class="eyebrow">{{ $num }}</p>
+                            <p class="font-serif text-xl mt-3">{{ $title }}</p>
+                            <p class="text-sm text-ink/70 mt-2 leading-relaxed">{{ $body }}</p>
                         </div>
                     @endforeach
                 </div>
@@ -89,63 +79,89 @@
         </div>
     </section>
 
-    {{-- TEAM --}}
-    <section class="mx-auto max-w-6xl px-6 py-20">
-        <p class="section-eyebrow mb-3">{{ __('The team') }}</p>
-        <h2 class="text-3xl font-bold tracking-tight leading-tight mb-10">
-            {{ __('Built by clinicians, scaled by operators.') }}
-        </h2>
-
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            @foreach ([
-                ['Ria', __('Certified coach — career and parenting guidance.')],
-                ['Martine', __('Physician — clinical trajectory development.')],
-                ['Marc', __('Business advisor — operations and efficiency.')],
-            ] as [$name, $role])
-                <div class="hairline p-6">
-                    <p class="text-xl font-semibold">{{ $name }}</p>
-                    <p class="text-sm text-neutral-700 mt-2 leading-relaxed">{{ $role }}</p>
+    <section class="relative bg-ink text-alabaster overflow-hidden">
+        <div class="blob bg-sage-700 w-[40rem] h-[40rem] top-1/2 -right-40 -translate-y-1/2 opacity-30 animate-ambient"></div>
+        <div class="blob bg-tallow-700 w-[28rem] h-[28rem] top-0 left-1/3 opacity-15 animate-ambient" style="animation-delay:-5s"></div>
+        <div class="relative mx-auto max-w-7xl px-6 lg:px-10 py-32">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-5 space-y-6" data-reveal>
+                    <p class="eyebrow text-tallow-300">{{ __('Who is Spaid for?') }}</p>
+                    <h2 class="font-serif text-h1 leading-tight">{{ __('Employees with children aged') }} <em class="text-tallow-300">5–18</em> {{ __('carrying a clinical diagnosis.') }}</h2>
+                    <p class="text-alabaster/75 leading-relaxed max-w-md">{{ __('One program, five clinical pathways — each routed to a psychologist who actually specializes in that diagnosis. No generic intake.') }}</p>
                 </div>
-            @endforeach
-        </div>
-    </section>
-
-    {{-- KU LEUVEN PARTNERSHIP --}}
-    <section class="bg-neutral-50 hairline border-x-0">
-        <div class="mx-auto max-w-6xl px-6 py-16 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-            <div class="md:col-span-7">
-                <p class="section-eyebrow mb-3">{{ __('Scientific partnership') }}</p>
-                <h2 class="text-2xl font-bold tracking-tight">
-                    {{ __('Developed with KU Leuven faculty of Psychology & Educational Sciences.') }}
-                </h2>
-                <p class="text-neutral-700 mt-3 leading-relaxed">
-                    {{ __('In collaboration with Prof. Dr. Dieter Baeyens and Prof. Dr. Karla Van Leeuwen.') }}
-                </p>
-            </div>
-            <div class="md:col-span-5">
-                <div class="hairline p-6 text-center bg-white">
-                    <p class="text-xs uppercase tracking-widest text-neutral-500">KU Leuven</p>
-                    <p class="font-bold text-lg mt-2">{{ __('Psychology & Educational Sciences') }}</p>
+                <div class="lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-3" data-reveal style="transition-delay:.15s">
+                    @foreach ($issueTypes as $issue)
+                        <div class="group relative p-6 border border-alabaster/15 rounded-2xl hover:bg-alabaster/5 transition-all">
+                            <span class="block w-1.5 h-1.5 rounded-full bg-tallow-500 mb-4 group-hover:bg-alabaster transition-colors"></span>
+                            <p class="font-serif text-2xl">{{ $issue->label() }}</p>
+                            <p class="text-[0.7rem] uppercase tracking-widest text-alabaster/40 mt-2">{{ strtoupper($issue->value) }}</p>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>
     </section>
 
-    {{-- B2B CTA --}}
-    <section class="mx-auto max-w-6xl px-6 py-24">
-        <div class="hairline border-2 p-10 sm:p-14 flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-            <div>
-                <p class="section-eyebrow mb-3">{{ __('For employers') }}</p>
-                <h2 class="text-3xl font-bold tracking-tight max-w-lg leading-tight">
-                    {{ __('Curious about Spaid for your company?') }}
-                </h2>
-                <p class="text-neutral-700 mt-3">
-                    {{ __('Book a no-obligation intake with our team.') }}
-                </p>
+    <section class="relative">
+        <div class="mx-auto max-w-7xl px-6 lg:px-10 py-32">
+            <div class="max-w-3xl mb-16" data-reveal>
+                <p class="eyebrow">{{ __('The team') }}</p>
+                <h2 class="font-serif text-h1 leading-tight mt-3">{{ __('Built by clinicians,') }} <em class="text-sage-700">{{ __('scaled by operators.') }}</em></h2>
             </div>
-            <div class="flex flex-col items-start md:items-end gap-2">
-                <a href="{{ route('contact.show') }}" class="btn-primary">{{ __('Book intake') }} →</a>
-                <a href="mailto:office@spaid.be" class="text-sm underline underline-offset-4">office@spaid.be</a>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                @foreach ([
+                    ['Ria',     __('Certified coach'),    __('Career and parenting guidance for 20+ years.')],
+                    ['Martine', __('Physician'),          __('Clinical trajectory development & medical liaison.')],
+                    ['Marc',    __('Business advisor'),   __('Operations, efficiency, and B2B distribution.')],
+                ] as [$name, $title, $body])
+                    <article class="card group" data-reveal style="transition-delay:{{ $loop->index * 0.1 }}s">
+                        <div class="aspect-[5/6] rounded-xl bg-gradient-to-br from-sage-200 to-whisper mb-5 flex items-end p-5 relative overflow-hidden">
+                            <div class="absolute inset-0 bg-noise opacity-30"></div>
+                            <span class="relative font-serif text-6xl text-ink/70">{{ substr($name, 0, 1) }}</span>
+                        </div>
+                        <p class="font-serif text-2xl">{{ $name }}</p>
+                        <p class="eyebrow mt-1">{{ $title }}</p>
+                        <p class="text-sm text-ink/70 mt-3 leading-relaxed">{{ $body }}</p>
+                    </article>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-whisper/50 border-y border-ink/10">
+        <div class="mx-auto max-w-7xl px-6 lg:px-10 py-24 grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+            <div class="md:col-span-7 space-y-4" data-reveal>
+                <p class="eyebrow">{{ __('Scientific partnership') }}</p>
+                <h2 class="font-serif text-h2 leading-tight">{{ __('Developed with KU Leuven faculty of') }} <em class="text-sage-700">{{ __('Psychology & Educational Sciences.') }}</em></h2>
+                <p class="text-ink/70 leading-relaxed max-w-xl">{{ __('In collaboration with Prof. Dr. Dieter Baeyens and Prof. Dr. Karla Van Leeuwen.') }}</p>
+            </div>
+            <div class="md:col-span-5" data-reveal style="transition-delay:.1s">
+                <div class="card text-center bg-ink text-alabaster border-ink shadow-sanctuary">
+                    <p class="eyebrow text-tallow-300">KU Leuven</p>
+                    <p class="font-serif text-3xl mt-3">{{ __('Psychology & Educational Sciences') }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="relative">
+        <div class="mx-auto max-w-7xl px-6 lg:px-10 py-32">
+            <div class="relative rounded-3xl overflow-hidden p-12 md:p-20 bg-gradient-to-br from-sage-700 to-ink text-alabaster shadow-sanctuary" data-reveal>
+                <div class="blob bg-tallow-500 w-[28rem] h-[28rem] -top-20 -right-20 opacity-25 animate-ambient"></div>
+                <div class="relative grid grid-cols-1 md:grid-cols-12 gap-10 items-end">
+                    <div class="md:col-span-8 space-y-5">
+                        <p class="eyebrow text-tallow-300">{{ __('For employers') }}</p>
+                        <h2 class="font-serif text-h1 leading-tight max-w-2xl">{{ __('Curious about Spaid for') }} <em>{{ __('your company') }}</em>?</h2>
+                        <p class="text-alabaster/80 leading-relaxed max-w-lg">{{ __('A 30-minute intake. We map your workforce + scope a pilot. No deck, no obligation.') }}</p>
+                    </div>
+                    <div class="md:col-span-4 flex flex-col items-start md:items-end gap-3">
+                        <a href="{{ route('contact.show') }}" class="btn btn-tallow" data-magnetic>
+                            {{ __('Book intake') }}
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                        </a>
+                        <a href="mailto:office@spaid.be" class="link-underline text-tallow-300 text-sm">office@spaid.be</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
