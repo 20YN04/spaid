@@ -51,20 +51,20 @@
                     </div>
                 </div>
 
-                {{-- Hero side: composite typographic mark — large numeric + caption --}}
-                <div class="lg:col-span-4" data-reveal style="transition-delay:.15s">
-                    <div class="relative rounded-3xl overflow-hidden p-8 lg:p-10 bg-ink text-alabaster shadow-sanctuary">
-                        <div class="blob bg-tallow-700 w-44 h-44 -top-10 -right-10 opacity-50"></div>
-
-                        <p class="kicker text-tallow-300 relative">{{ __('You are not alone') }}</p>
-
-                        {{-- Massive numerical moment --}}
-                        <p class="relative font-serif font-light text-[8rem] leading-[0.85] tracking-tighter mt-4 text-tallow-300 italic">1<span class="not-italic text-alabaster/55">/</span>5</p>
-
-                        <p class="relative font-serif text-xl leading-snug mt-5 text-alabaster/95">
-                            {{ __('school-age children carries a learning or neurodevelopmental diagnosis.') }}
+                {{-- Hero side: illustration sourced from spaid.be original site + stat ribbon --}}
+                <div class="lg:col-span-4 space-y-4" data-reveal style="transition-delay:.15s">
+                    <div class="relative rounded-3xl overflow-hidden bg-sage-100 aspect-square">
+                        <img src="/img/spaid/hero.png" alt="{{ __('Illustration: a parent in thought, surrounded by leaves and questions.') }}"
+                             class="w-full h-full object-contain p-4"
+                             loading="eager" decoding="async">
+                    </div>
+                    <div class="relative rounded-2xl bg-ink text-alabaster p-5 shadow-sanctuary">
+                        <p class="kicker text-tallow-300">{{ __('You are not alone') }}</p>
+                        <p class="font-serif text-2xl leading-snug mt-2">
+                            <span class="font-light italic text-tallow-300">1<span class="not-italic text-alabaster/55">/</span>5</span>
+                            <span class="text-alabaster/95">{{ __('school-age children carries a diagnosis.') }}</span>
                         </p>
-                        <p class="relative text-[0.7rem] text-alabaster/55 mt-6 italic font-serif">{{ __('Source: KU Leuven Psychology & Educational Sciences') }}</p>
+                        <p class="text-[0.7rem] text-alabaster/55 mt-2 italic font-serif">{{ __('Source: KU Leuven Psychology & Educational Sciences') }}</p>
                     </div>
                 </div>
             </div>
@@ -291,10 +291,9 @@
                 </p>
             </div>
             <div class="col-span-12 lg:col-span-4" data-reveal style="transition-delay:.1s">
-                <div class="aspect-[5/4] rounded-3xl bg-ink text-alabaster relative overflow-hidden flex flex-col justify-between p-8 shadow-sanctuary">
-                    <div class="blob bg-tallow-700 w-44 h-44 -top-10 -right-10 opacity-50"></div>
-                    <p class="relative font-serif italic text-tallow-300">KU Leuven</p>
-                    <p class="relative font-serif text-3xl leading-tight">{{ __('Psychology & Educational Sciences') }}</p>
+                <div class="aspect-[5/4] rounded-3xl bg-alabaster relative overflow-hidden flex flex-col items-center justify-center gap-6 p-10 shadow-sanctuary border border-sage-700/15">
+                    <img src="/img/spaid/kuleuven.png" alt="KU Leuven" class="h-12 w-auto" loading="lazy" decoding="async">
+                    <p class="font-serif italic text-center text-ink/75 leading-snug">{{ __('Psychology & Educational Sciences') }}</p>
                 </div>
             </div>
         </div>
