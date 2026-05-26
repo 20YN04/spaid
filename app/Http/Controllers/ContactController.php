@@ -24,7 +24,9 @@ class ContactController extends Controller
         ]);
 
         // TODO: wire to a real mailable that delivers to office@spaid.be.
-        Log::info('Contact form submission', $data);
+        Log::info('Contact form received', [
+            'email_hash' => hash('sha256', $data['email']),
+        ]);
 
         return redirect()
             ->route('contact.show')

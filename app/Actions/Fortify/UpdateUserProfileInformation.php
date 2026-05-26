@@ -2,7 +2,9 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\Client;
 use App\Models\User;
+use Closure;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -29,6 +31,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'email',
                 'max:255',
                 Rule::unique('users')->ignore($user->id),
+                $this->emailDomainAllowed(),
             ],
         ])->validateWithBag('updateProfileInformation');
 
@@ -41,6 +44,27 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'email' => $input['email'],
             ])->save();
         }
+    }
+
+    protected function emailDomainAllowed(): Closure
+    {
+        return function (string $attribute, mixed $value, Closure $fail): void {
+            if (! is_string($value) || ! str_contains($value, '@')) {
+                $fail('Invalid email address.');
+
+                return;
+            }
+
+            $domain = '@' . strtolower(substr(strrchr($value, '@'), 1));
+
+            $allowed = Client::query()
+                ->whereRaw('LOWER(allowed_domain) = ?', [$domain])
+                ->exists();
+
+            if (! $allowed) {
+                $fail('Registration is restricted to authorized corporate email domains.');
+            }
+        };
     }
 
     /**

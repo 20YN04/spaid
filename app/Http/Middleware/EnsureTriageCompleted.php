@@ -24,11 +24,6 @@ class EnsureTriageCompleted
             return $next($request);
         }
 
-        if (method_exists($user, 'hasEnabledTwoFactorAuthentication')
-            && ! $user->hasEnabledTwoFactorAuthentication()) {
-            return $next($request);
-        }
-
         if ($user->triage_completed) {
             return $next($request);
         }

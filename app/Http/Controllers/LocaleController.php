@@ -18,6 +18,6 @@ class LocaleController extends Controller
 
         $request->session()->put('locale', $locale);
 
-        return redirect($request->headers->get('referer') ?: '/');
+        return redirect()->back('/');
     }
 }

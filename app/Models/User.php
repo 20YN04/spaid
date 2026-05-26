@@ -29,6 +29,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'triage_completed' => 'boolean',
+            'is_admin' => 'boolean',
         ];
     }
 
@@ -57,6 +58,8 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return $panel->getId() === 'admin' && str_ends_with($this->email, '@ynarchive.com');
+        return $panel->getId() === 'admin'
+            && $this->is_admin
+            && str_ends_with($this->email, '@ynarchive.com');
     }
 }
